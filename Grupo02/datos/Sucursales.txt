@@ -1,0 +1,26 @@
+TBL,DIAGONAL NORTE,Cerrito 404,Capital Federal,Capital Federal,1010,RAP,95
+MST,SAN TELMO,La Rioja 301,CABA	Capital Federal,Capital Federal,1141,FAS,20
+FLS,PARQUE CENTENARIO,AMBROSETTI 768,Capital Federal,Capital Federal,1405,OCA,40
+LIR,LINIERS,Av. Rivadavia 10608/14,Capital Federal,Capital Federal,1408,OCA,40
+BNO,AV. ALVAREZ THOMAS,Alvarez Thomas 1440,Capital Federal,Capital Federal,1427,AND,50
+AVE,AVELLANEDA,Sarmiento 57,Buenos Aires,Buenos Aires,1827,OCA,40
+ADG,LUIS GUILLON,Boulevard Bs. As. 1459,Buenos Aires,Buenos Aires,1838,OCA,40
+FLV,FLORENCIO VARELA,Las Americas,1684,Buenos Aires,Buenos Aires,1888,OCA,40
+ROS,ROSARIO,Santiago 360/368/380,Santa Fe,Santa Fe,2000,OCA,120
+LZO,SAN LORENZO,Dorrego 1598,Santa Fe,Santa Fe,2200,AND,120
+RAF,RAFAELA,Av. Santa Fe 742,Santa Fe,Santa Fe,2300,AND,120
+SUN,SUNCHALES,Mitre 41,Santa Fe,Santa Fe,2322,RAP,220
+VTO,VENADO TUERTO,12 de octubre,0806,Santa Fe,Santa Fe,2600,RAP,220
+INO,PERGAMINO,Italia 471/89,Buenos Aires,Buenos Aires,2701,RAP,120
+GCH,GUALEGUAYCHU,SANTIAGO DIAZ 18,Entre Rios,Entre Rios,2820,RAP,140
+SFE,SANTA FE,Mendoza 3343,Santa Fe,Santa Fe,3000,FAS,40
+PAR,PARANA,Almafuerte 1504,Entre Rios,Entre Rios,3100,OCA,120
+CON,CONCORDIA,H. Yrigoyen 771,Entre Rios,Entre Rios,3200,FAS,50
+CDU,CONCEPCION DEL URUGUAY,Alberdi 791,Entre Rios,Entre Rios,3260,AND,80
+RQT,RECONQUISTA,San Lorenzo 845,Santa Fe,Santa Fe,3560,FAS,40
+STR,SANTA ROSA,Dante Alighieri 1346,La Pampa,La Pampa,6300,OCA,120
+PIC,GENERAL PICO,Calle 37 Nro. 606,La Pampa,La Pampa,6360,AND,80
+COY,CHIVILCOY,Av 3 de Febrero 384,Buenos Aires,Buenos Aires,6620,AND,75
+CHB,CHACABUCO,Primera Junta 112,Buenos Aires,Buenos Aires,6740,AND,75
+LOR,DOLORES,Aristobulo del Valle 312,Buenos Aires,Buenos Aires,7100,FAS,30
+LBO,LOBOS,ALBERDI 212,Buenos Aires,Buenos Aires,7240,FAS,30
