@@ -37,10 +37,11 @@ main() {
 
 	echo "Desea posicionarse en el directorio del inicializador? (si/no)"
 	read respuesta
+	respuesta=$(echo $respuesta | awk '{print tolower($0)}')
 	if [[ $respuesta = "si" ]]; then
-		cd "$(obtenerVariable DIRBIN)"
+		cd $DIRBIN #TODO No funciona
 	fi
-	
+	echo "Instalación finalizada"
 
 }
 
@@ -219,7 +220,6 @@ function mostrarDirectoriosElegidos() {
 
 function confirmarInstalacion() {
 	
-	#TODO Verificar que pasa si elije algo distinto a si o no
 	answ=
 	while [[ $answ = "" ]]; do
 		echo "Desea continuar con la instalación? (Si – No)"
@@ -240,7 +240,6 @@ function confirmarInstalacion() {
 }
 
 function reconfirmarInstalacion() {
-	#TODO Verificar que pasa si elije algo distinto a si o no
 	answ=
 	while [[ $answ = "" ]]; do
 		echo "Iniciando Instalación. Esta Ud. seguro que desea iniciar la instalacion? (Si-No)"
@@ -303,7 +302,7 @@ function creardirectorios() {
 	loguear "Directorio elegido para Archivos Maestros: $(obtenerVariable DIRMAE)" "INFO"
 
 	loguear "Directorio elegido para Recepcion de Novedades: $(obtenerVariable DIRNOV)" "INFO"
-	mkdir -p "$(obtenerVariable DIRREC)"
+	mkdir -p "$(obtenerVariable DIRNOV)"
 
 	loguear "Directorio elegido para Archivos Aceptados: $(obtenerVariable DIROK)" "INFO"
 	mkdir -p "$(obtenerVariable DIROK)"
