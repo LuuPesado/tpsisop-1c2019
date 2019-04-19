@@ -31,6 +31,8 @@ main() {
 	creardirectorios
 	
 	setearDireccionLoggerDefinitiva
+	DIRBIN="$(obtenerVariable DIRBIN)"
+	verificarPermisoEjecucion "$DIRBIN/Init.sh" || return 1
 	loguear "Actualizando la configuracion del sistema" "INFO"
 	loguear "Instalacion CONCLUIDA" "INFO"
 	loguear "FIN del proceso. Usuario: `whoami` Fecha y hora:  `date`" "INFO"
@@ -39,6 +41,7 @@ main() {
 	read respuesta
 	respuesta=$(echo $respuesta | awk '{print tolower($0)}')
 	if [[ $respuesta = "si" ]]; then
+		echo "entiendo respuesta si, estoy en $GRUPO muevo a $DIRBIN"
 		cd $DIRBIN #TODO No funciona
 	fi
 	echo "Instalación finalizada"
@@ -96,7 +99,7 @@ loguearDirectoriosPorDefecto(){
 
 function elegirDirectorios() {
 	echo "A continuacion se inicia el proceso de eleccion de directorios.
-	En caso de haber algun porblema se setearan nombres por default."
+En caso de haber algun porblema se setearan nombres por default."
 	#a
 	echo "Defina el directorio de ejecutables (Grupo02/$DIRBIN): "
 	setearDirectorio DIRBIN
@@ -332,5 +335,36 @@ obtenerVariable(){
 setearDireccionLoggerDefinitiva() {
 	DIRLOGBIN="$(obtenerVariable DIRBIN)"
 }
+
+verificarPermisoLectura(){
+	name="$(obtenerNombreArchivo "$1")"
+	loguear "Intentando setear permiso de lectura a $name" "INFO"
+	echo "Seteando permiso de lectura a $name"
+	chmod +r-xw "$1"
+	if ! [[ $? -eq 0 ]]; then
+		loguearInit "No se puede setear permiso de lectura a $name" "ERR"
+		echo "No se pudo setear permiso de lectura a $name"
+		return 1
+	fi
+}
+
+obtenerNombreArchivo(){
+	echo "$(echo $1 | sed "s#.*/##")"
+}
+
+verificarPermisoEjecucion(){
+	#Si no se puede leer > no se puede ejecutar
+	verificarPermisoLectura "$1" || return 1
+	name="$(obtenerNombreArchivo "$1")"
+	loguear "Intentando setear permiso de ejecucion a $name" "INFO"
+	echo "Intentando setear permiso de ejecucion a $name"
+	chmod +x+r-w "$1"
+	if ! [[ $? -eq 0 ]]; then
+		loguear "No se puede setear permiso de ejecucion a $name" "ERR"
+		echo "No se puede setear permiso de ejecucion a $name"
+		return 1
+	fi
+}
+
 
 main

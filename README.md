@@ -42,4 +42,7 @@
 
 ```
 
-## 
+Luego posicionarse en el directorio bin (o el que haya elegido para colocar los archivos ejecutables) -TODO arreglar para que se mueva solo- y correr el comando ./Init.sh
+
+Esto seteará los permisos correspondientes a cada archivo para luego poder accaeder a ellos e iniciará, si aspi lo decide el Demonio (Por ahora solo hace un echo)
+
