@@ -17,7 +17,7 @@ main() {
 					"$DIRBIN"/Proc.sh "PROCESO" > /dev/null &
 				fi
 		fi
-		sleep 2s
+		sleep 20s
 	done
 }
 
@@ -37,7 +37,7 @@ clasificarEntregas(){
 		#Entrega tiene un nombre valido ?
 		echo "$entrega" | grep -v '^Entrega_[0-9][0-9]$' > tmp.txt
 		local inv=`cat tmp.txt`
-		if [ -z inv]
+		if [ -z inv ]
 		then
 			echo "$entrega tiene un nombre valido" >> logDemonio
 		else
