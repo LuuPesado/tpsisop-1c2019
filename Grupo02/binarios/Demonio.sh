@@ -21,6 +21,7 @@ main() {
 	done
 }
 
+
 clasificarEntregas(){
 	local nov= ls $DIRNOV
 	for entrega in $nov
@@ -28,25 +29,25 @@ clasificarEntregas(){
 		#Entrega vacia ?
 		if [ -s $entrega ];
 		then
-  		#echo "$entrega no vicia"
+  		echo "$entrega no vicia" >> logDemonio
 		else
   		echo "$entrega vicia" >> logRechazados
 			mv $entrega $DIRNOK
 		fi
-		#Entrega tiene un nombre valido ? 
+		#Entrega tiene un nombre valido ?
 		echo "$entrega" | grep -v '^Entrega_[0-9][0-9]$' > tmp.txt
 		local inv=`cat tmp.txt`
 		if [ -z inv]
 		then
-			echo "$entrega tiene un nombre valido"
+			echo "$entrega tiene un nombre valido" >> logDemonio
 		else
-			echo "$entrega no tiene un nombre valido "
+			echo "$entrega no tiene un nombre valido "  >> logRechazados
 			mv $entrega $DIRNOK
 		fi
 		#Entrega es un archivo regular ?
 		if [ -f $entrega ];
 		then
-			#echo "$entrega es un archivo regular"
+			echo "$entrega es un archivo regular" >> logDemonio
 		else
 			echo "$entrega no es un archivo regular" >> logRechazados
 			mv $entrega $DIRNOK
