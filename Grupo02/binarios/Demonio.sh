@@ -23,15 +23,15 @@ main() {
 
 
 clasificarEntregas(){
-	local nov= ls $DIRNOV
-	for entrega in $nov
+	#local nov= ls $DIRNOV
+	for entrega in $(find $DIRNOV -type f)
 	do
 		#Entrega vacia ?
 		if [ -s $entrega ];
 		then
-  		echo "$entrega no vicia" >> logDemonio
+  		echo "$entrega no vacia" >> logDemonio
 		else
-  		echo "$entrega vicia" >> logRechazados
+  		echo "$entrega vacia" >> logRechazados
 			mv $entrega $DIRNOK
 		fi
 		#Entrega tiene un nombre valido ?
