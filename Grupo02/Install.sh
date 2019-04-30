@@ -20,46 +20,49 @@ main() {
 		fi
 	fi
 	if ! [ -d "$ISINSTALLED" ]; then
-
-		setearDirectoriosPorDefecto
-		DIRLOGBIN=$GRUPO/binarios
-		mkdir -m 777 $DIRCONF $DIRLOG
-		verificarPermisosLogueo $GRUPO/$DIRLOG/Install.log
-		loguear "Inicio del proceso. Usuario: `whoami` Fecha y hora:  `date`" "INFO"
-		loguear "Carpeta de config creada." "INFO"
-		loguearDirectoriosPorDefecto
-
-		while [[ $CONFIRMO_DIRECTORIOS = "NO" ]]; do
-			directorios=()
-			elegirDirectorios
-			while [[ $ESPACIO_SUFICIENTE = "NO" ]]; do
-				elegirEspacioMinimo
-				verificarEspacio
-			done
-			mostrarDirectoriosElegidos
-			confirmarInstalacion
-		done
-		reconfirmarInstalacion
-		grabarConfig
-		creardirectorios
-		
-		setearDireccionLoggerDefinitiva
-		DIRBIN="$(obtenerVariable DIRBIN)"
-		verificarPermisoEjecucion "$DIRBIN/Init.sh" || return 1
-		loguear "Actualizando la configuracion del sistema" "INFO"
-		loguear "Instalacion CONCLUIDA" "INFO"
-		loguear "FIN del proceso. Usuario: `whoami` Fecha y hora:  `date`" "INFO"
-
-		echo "Desea posicionarse en el directorio del inicializador? (si/no)"
-		read respuesta
-		respuesta=$(echo $respuesta | awk '{print tolower($0)}')
-		if [[ $respuesta = "si" ]]; then
-			echo "entiendo respuesta si, estoy en $GRUPO muevo a $DIRBIN"
-			cd $DIRBIN #TODO No funciona
-		fi
-		echo "Instalación finalizada"
+		instalarPrograma
 	fi
 
+}
+
+instalarPrograma() {	
+	setearDirectoriosPorDefecto
+	DIRLOGBIN=$GRUPO/binarios
+	mkdir -m 777 $DIRCONF $DIRLOG
+	verificarPermisosLogueo $GRUPO/$DIRLOG/Install.log
+	loguear "Inicio del proceso. Usuario: `whoami` Fecha y hora:  `date`" "INFO"
+	loguear "Carpeta de config creada." "INFO"
+	loguearDirectoriosPorDefecto
+
+	while [[ $CONFIRMO_DIRECTORIOS = "NO" ]]; do
+		directorios=()
+		elegirDirectorios
+		while [[ $ESPACIO_SUFICIENTE = "NO" ]]; do
+			elegirEspacioMinimo
+			verificarEspacio
+		done
+		mostrarDirectoriosElegidos
+		confirmarInstalacion
+	done
+	reconfirmarInstalacion
+	grabarConfig
+	creardirectorios
+	
+	setearDireccionLoggerDefinitiva
+	DIRBIN="$(obtenerVariable DIRBIN)"
+	verificarPermisoEjecucion "$DIRBIN/Init.sh" || return 1
+	loguear "Actualizando la configuracion del sistema" "INFO"
+	loguear "Instalacion CONCLUIDA" "INFO"
+	loguear "FIN del proceso. Usuario: `whoami` Fecha y hora:  `date`" "INFO"
+
+	echo "Desea posicionarse en el directorio del inicializador? (si/no)"
+	read respuesta
+	respuesta=$(echo $respuesta | awk '{print tolower($0)}')
+	if [[ $respuesta = "si" ]]; then
+		echo "entiendo respuesta si, estoy en $GRUPO muevo a $DIRBIN"
+		cd $DIRBIN #TODO No funciona
+	fi
+	echo "Instalación finalizada"
 }
 
 setearDirectoriosPorDefecto() {
@@ -352,7 +355,14 @@ function necesitaRepararse() {
 }
 
 function repararPrograma() {
-	echo "reparando.."
+	echo "Reparando instalacion."
+	eliminarProgramaMalInstalado
+	instalarPrograma
+}
+
+eliminarProgramaMalInstalado () {
+	rm -d -rf $(ls | grep -v conf | grep -v bin | grep -v mae | grep -v Install.sh)
+	rm $GRUPO/$DIRCONF/tpconfig.txt
 }
 
 obtenerVariable(){
