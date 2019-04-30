@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GRUPO=${PWD/}
+GRUPO=${PWD}
 DIRCONF=conf
 DIRLOG=conf/log
 
@@ -8,43 +8,57 @@ DIRLOG=conf/log
 
 main() {
 	export GRUPO
-	setearDirectoriosPorDefecto
-	DIRLOGBIN=$GRUPO/binarios
-	mkdir -m 777 $DIRCONF $DIRLOG
-	verificarPermisosLogueo $GRUPO/$DIRLOG/Install.log
-	loguear "Inicio del proceso. Usuario: `whoami` Fecha y hora:  `date`" "INFO"
-	loguear "Carpeta de config creada." "INFO"
-	loguearDirectoriosPorDefecto
 
-	while [[ $CONFIRMO_DIRECTORIOS = "NO" ]]; do
-		directorios=()
-		elegirDirectorios
-		while [[ $ESPACIO_SUFICIENTE = "NO" ]]; do
-			elegirEspacioMinimo
-			verificarEspacio
-		done
-		mostrarDirectoriosElegidos
-		confirmarInstalacion
-	done
-	reconfirmarInstalacion
-	grabarConfig
-	creardirectorios
-	
-	setearDireccionLoggerDefinitiva
-	DIRBIN="$(obtenerVariable DIRBIN)"
-	verificarPermisoEjecucion "$DIRBIN/Init.sh" || return 1
-	loguear "Actualizando la configuracion del sistema" "INFO"
-	loguear "Instalacion CONCLUIDA" "INFO"
-	loguear "FIN del proceso. Usuario: `whoami` Fecha y hora:  `date`" "INFO"
-
-	echo "Desea posicionarse en el directorio del inicializador? (si/no)"
-	read respuesta
-	respuesta=$(echo $respuesta | awk '{print tolower($0)}')
-	if [[ $respuesta = "si" ]]; then
-		echo "entiendo respuesta si, estoy en $GRUPO muevo a $DIRBIN"
-		cd $DIRBIN #TODO No funciona
+	ISINSTALLED="$(obtenerVariable DIRBIN)"
+	if [ -d "$ISINSTALLED" ]; then
+		necesitaRepararse="$(necesitaRepararse)"
+		if [[ $necesitaRepararse = "si" ]]; then
+			repararPrograma
+		fi
+		if [[ $necesitaRepararse = "no" ]]; then
+			echo "Programa instalado correctamente."
+		fi
 	fi
-	echo "Instalación finalizada"
+	if ! [ -d "$ISINSTALLED" ]; then
+
+		setearDirectoriosPorDefecto
+		DIRLOGBIN=$GRUPO/binarios
+		mkdir -m 777 $DIRCONF $DIRLOG
+		verificarPermisosLogueo $GRUPO/$DIRLOG/Install.log
+		loguear "Inicio del proceso. Usuario: `whoami` Fecha y hora:  `date`" "INFO"
+		loguear "Carpeta de config creada." "INFO"
+		loguearDirectoriosPorDefecto
+
+		while [[ $CONFIRMO_DIRECTORIOS = "NO" ]]; do
+			directorios=()
+			elegirDirectorios
+			while [[ $ESPACIO_SUFICIENTE = "NO" ]]; do
+				elegirEspacioMinimo
+				verificarEspacio
+			done
+			mostrarDirectoriosElegidos
+			confirmarInstalacion
+		done
+		reconfirmarInstalacion
+		grabarConfig
+		creardirectorios
+		
+		setearDireccionLoggerDefinitiva
+		DIRBIN="$(obtenerVariable DIRBIN)"
+		verificarPermisoEjecucion "$DIRBIN/Init.sh" || return 1
+		loguear "Actualizando la configuracion del sistema" "INFO"
+		loguear "Instalacion CONCLUIDA" "INFO"
+		loguear "FIN del proceso. Usuario: `whoami` Fecha y hora:  `date`" "INFO"
+
+		echo "Desea posicionarse en el directorio del inicializador? (si/no)"
+		read respuesta
+		respuesta=$(echo $respuesta | awk '{print tolower($0)}')
+		if [[ $respuesta = "si" ]]; then
+			echo "entiendo respuesta si, estoy en $GRUPO muevo a $DIRBIN"
+			cd $DIRBIN #TODO No funciona
+		fi
+		echo "Instalación finalizada"
+	fi
 
 }
 
@@ -326,6 +340,19 @@ function creardirectorios() {
 	loguear "Grabando Archivos Ejecutables: $(obtenerVariable DIRBIN)" "INFO"
     mv $GRUPO/binarios "$(obtenerVariable DIRBIN)"
 
+}
+
+function necesitaRepararse() {
+	if [[ -d "$(obtenerVariable DIRNOV)"  &&  -d "$(obtenerVariable DIROK)"  &&  -d "$(obtenerVariable DIRNOK)"  &&  -d "$(obtenerVariable DIROUT)"  &&  -d "$(obtenerVariable DIRPROC)"  &&   -d "$(obtenerVariable DIRMAE)"  &&   -d "$(obtenerVariable DIRBIN)" ]]; then
+		echo "no"
+	fi
+	if ! [[ -d "$(obtenerVariable DIRNOV)"  &&  -d "$(obtenerVariable DIROK)"  &&  -d "$(obtenerVariable DIRNOK)"  &&  -d "$(obtenerVariable DIROUT)"  &&  -d "$(obtenerVariable DIRPROC)"  &&   -d "$(obtenerVariable DIRMAE)"  &&   -d "$(obtenerVariable DIRBIN)" ]]; then
+		echo "si"
+	fi
+}
+
+function repararPrograma() {
+	echo "reparando.."
 }
 
 obtenerVariable(){
