@@ -18,7 +18,7 @@
 ```
 
 - Ejecutar el Instalador con el siguiente comando ubicado en el directorio elegido anteriormente para la instalación:  
-  ` . ./Instalep.sh `
+  ` . ./install.sh `
 - Al ejecutar el Install se le solicitará que indique los nombres de las carpetas requeridas para ubicar los archivos. Además, se pedirá que se ingrese la cantidad de megabytes para el espacio disponible de los archivos, en caso de que no haya espacio suficiente se le informará.
 
 - Finalmente, se obtendrá una estructura de carpetas similar a la siguiente en el directorio Grupo02:
@@ -44,5 +44,6 @@
 
 Luego posicionarse en el directorio bin (o el que haya elegido para colocar los archivos ejecutables) -TODO arreglar para que se mueva solo- y correr el comando ./Init.sh
 
-Esto seteará los permisos correspondientes a cada archivo para luego poder accaeder a ellos e iniciará, si aspi lo decide el Demonio (Por ahora solo hace un echo)
+Esto seteará los permisos correspondientes a cada archivo para luego poder accaeder a ellos e iniciará, si asi lo decide el Demonio.
 
+En cualquier momento, correr ./MatarDemonio en otra terminal termina el proceso.
